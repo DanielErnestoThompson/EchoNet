@@ -12,7 +12,7 @@ def start_client():
         ]
 
         for req in requests:
-            s.sendall(rec.encode())
+            s.sendall(req.encode())
             data = s.recv(1024)
             print(f"Received: {data.decode()}")
 
