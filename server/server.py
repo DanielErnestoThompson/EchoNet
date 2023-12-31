@@ -1,9 +1,9 @@
 import socket
 from datetime import datetime
 
-def handle_request():
+def handle_request(request_type, message):
     if request_type == 'get_time':
-        return (datetime.now())
+        return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     elif request_type == 'echo':
         return message
     elif request_type == 'calculate_sum':
@@ -24,8 +24,12 @@ def start_server():
                 data = conn.recv(1024)
                 if not data:
                     break
-                request_type, message = data.decode().split(':',1)
-                response = handle_request(request_type, message)
-                conn.sendall(response.encode())
+                try:
+                    request_type, message = data.decode().split(':', 1)
+                    response = handle_request(request_type, message)
+                    conn.sendall(response.encode())
+                except ValueError:
+                    conn.sendall('Invalid request format'.encode())
+
 if __name__ == '__main__':
     start_server()
