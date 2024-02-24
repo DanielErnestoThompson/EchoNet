@@ -4,7 +4,7 @@ As a software engineer aiming to deepen my understanding of network communicatio
 
 The purpose behind developing this software was to explore the intricacies of network programming, including socket programming, TCP/IP protocols, and the client-server model. By building a chat application from scratch, I aimed to bridge the gap between theoretical knowledge and real-world application, enhancing my skills in software development with a focus on network communications.
 
-[Software Demo Video](N/A)
+[Software Demo Video] - https://www.loom.com/share/a80124cf8fca402d9536c03e277569b9?sid=4b77123d-d5f8-488b-8924-3f1b2021b08a
 
 # Network Communication
 
