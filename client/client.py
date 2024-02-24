@@ -1,22 +1,34 @@
 import socket
 
-def start_client():
+# Validate the user input to ensure it's a valid request.
+def validate_request(request):
+    valid_requests = ['get_time', 'echo', 'calculate_sum', 'get_uptime', 'get_active_users']
+    return any(request.startswith(valid_cmd) for valid_cmd in valid_requests)
+
+
+# Start the client and handle user input.
+def start_client(host_ip, host_port):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect(('127.0.0.1', 6254))
+        s.connect((host_ip, host_port))
+        print("Connected to the server. Type your requests (or type 'exit' to quit):")
 
-        # Updated list of requests including new ones
-        requests = [
-            'get_time',
-            'echo: Hello, Server!',
-            'calculate_sum:5,3',
-            'get_uptime',  # New request for server uptime
-            'get_active_users'  # New request for active user count
-        ]
+        while True:
+            user_input = input("> ")
+            if user_input.lower() == 'exit':
+                break
 
-        for req in requests:
-            s.sendall(req.encode())
-            data = s.recv(1024)
-            print(f"Received: {data.decode()}")
+            if validate_request(user_input):
+                s.sendall(user_input.encode())
+                data = s.recv(1024)
+                print(f"Received: {data.decode()}")
+            else:
+                print("Invalid request format. Please try again.")
 
+
+# Get server IP and port from user and initiate client connection.
 if __name__ == "__main__":
-    start_client()
+    server_ip = input("Enter server IP: ")
+    server_port = int(input("Enter server port: "))
+
+    # Ensure there are two blank lines above according to PEP 8
+    start_client(server_ip, server_port)
